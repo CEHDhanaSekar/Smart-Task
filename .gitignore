@@ -6,4 +6,5 @@ obj/
 .vs/
 *.dll
 *.exe
-appsettings.Development.json
+appsettings.json
+appsettings.*.json
