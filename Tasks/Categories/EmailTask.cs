@@ -1,4 +1,5 @@
-﻿using SmartTask.Shared.Interfaces;
+using SmartTask.Shared.Interfaces;
+using SmartTask.Shared.Constants;
 using System.Net.Mail;
 
 namespace SmartTask.Tasks;
@@ -36,27 +37,27 @@ public class EmailTask : BaseTask
         }
     }
 
-    public override Task<bool> Validate()
+    public override ValidationResult Validate()
     {
-        if (Email == null) return Task.FromResult(false);
+        if (Email == null) return new ValidationResult { IsValid = false, Error = "Email is null" };
 
         if (IsValidEmail(Email))
         {
-            return Task.FromResult(true);
+            return new ValidationResult { IsValid = true };
         };
 
-        return Task.FromResult(false);
+        return new ValidationResult { IsValid = false, Error = "Invalid email format" };
     }
 
     public override async Task Execute()
     {
         Status.UpdateStatus("Validating...");
 
-        var res = await Validate();
+        var res = Validate();
 
-        if (!res)
+        if (!res.IsValid)
         {
-            Status.UpdateStatus("Validation failed. Invalid email.");
+            Status.UpdateStatus($"Validation failed. {res.Error}");
             return;
         }
 

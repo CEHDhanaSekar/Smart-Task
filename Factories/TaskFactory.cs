@@ -1,22 +1,27 @@
-﻿using SmartTask.Shared.Constants;
+using SmartTask.Shared.Constants;
 using SmartTask.Shared.Helpers;
 using SmartTask.Shared.Interfaces;
 using SmartTask.Tasks;
+using SmartTask.Tasks.Categories;
+using SmartTask.Shared.Interfaces.FileProcessTask;
 
 namespace SmartTask.Factories;
 
 public class TaskFactory : ITaskFactory
 {
     private readonly IEmailService _emailService;
+    private readonly IFileValidator _fileValidator;
     private readonly Dictionary<TaskType, Func<BaseTask>> _taskMap;
 
-    public TaskFactory(IEmailService emailService)
+    public TaskFactory(IEmailService emailService, IFileValidator fileValidator)
     {
         _emailService = emailService;
+        _fileValidator = fileValidator;
 
         _taskMap = new Dictionary<TaskType, Func<BaseTask>>
         {
-            { TaskType.Email, CreateEmailTask }
+            { TaskType.Email, CreateEmailTask },
+            { TaskType.File, CreateFileTask }
         };
     }
 
@@ -45,6 +50,18 @@ public class TaskFactory : ITaskFactory
             subject,
             body,
             _emailService
+        );
+    }
+
+    private BaseTask CreateFileTask()
+    {
+        Console.Write("Enter file path: ");
+        string filePath = Console.ReadLine() ?? "";
+
+        return new SmartTask.Tasks.Categories.FileProcessTask(
+            "Dynamic File Task",
+            filePath,
+            _fileValidator
         );
     }
 }

@@ -1,6 +1,7 @@
-﻿using SmartTask.Factories;
+using SmartTask.Factories;
 using SmartTask.Shared.Constants;
 using SmartTask.Shared.Interfaces;
+using SmartTask.Shared.Interfaces.FileProcessTask;
 using SmartTask.Tasks;
 using MyTaskFactory = SmartTask.Factories.TaskFactory;
 
@@ -9,10 +10,12 @@ namespace SmartTask;
 public class App
 {
     private readonly IEmailService _emailService;
+    private readonly IFileValidator _fileValidator;
 
-    public App(IEmailService emailService)
+    public App(IEmailService emailService, IFileValidator fileValidator)
     {
         _emailService = emailService;
+        _fileValidator = fileValidator;
     }
 
     public async void Run()
@@ -23,6 +26,7 @@ public class App
         {
             Console.WriteLine("Select Task:");
             Console.WriteLine("1. Email Task");
+            Console.WriteLine("2. File Task");
             Console.WriteLine("0. Exit");
             Console.Write("Enter choice: ");
 
@@ -37,7 +41,7 @@ public class App
                 continue;
             }
 
-            ITaskFactory factory = new MyTaskFactory(_emailService);
+            ITaskFactory factory = new MyTaskFactory(_emailService, _fileValidator);
 
             BaseTask task = factory.CreateTask((TaskType)choice);
 

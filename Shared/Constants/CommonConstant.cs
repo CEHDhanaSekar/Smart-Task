@@ -3,5 +3,11 @@
 public enum TaskType
 {
     Email = 1,
-    Sms = 2
+    File = 2
+}
+
+public class ValidationResult
+{
+    public bool IsValid { get; set; }
+    public string Error { get; set; } = string.Empty;
 }

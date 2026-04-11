@@ -1,4 +1,5 @@
-﻿using SmartTask.Shared.Helpers;
+﻿using SmartTask.Shared.Constants;
+using SmartTask.Shared.Helpers;
 
 namespace SmartTask.Tasks;
 
@@ -12,7 +13,7 @@ public abstract class BaseTask
     protected StatusTrackHelper Status;
 
     public abstract Task Execute();
-    public abstract Task<bool> Validate();
+    public abstract ValidationResult Validate();
 
     protected string GenerateTaskId()
     {
