@@ -55,6 +55,7 @@ public class EmailTask : BaseTask
 
         var res = Validate();
 
+        await Task.Delay(1000);
         if (!res.IsValid)
         {
             Status.UpdateStatus($"Validation failed. {res.Error}");
@@ -70,6 +71,7 @@ public class EmailTask : BaseTask
             await SendEmailAsync();
 
             Status.UpdateStatus("Mail Successfully sent...");
+            await Task.Delay(1000);
             Status.UpdateStatus("Task Completed...");
         }
         catch (Exception ex)

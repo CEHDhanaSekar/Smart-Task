@@ -29,6 +29,7 @@ public class FileProcessTask : BaseTask
 
         var res = Validate();
 
+        await Task.Delay(1000);
         if (!res.IsValid)
         {
             Status.UpdateStatus(res.Error);
@@ -50,6 +51,7 @@ public class FileProcessTask : BaseTask
             fileProcessor.Process(content, msg => Status.UpdateStatus(msg));
 
             Status.UpdateStatus("File Successfully Processed...");
+            await Task.Delay(1000);
             Status.UpdateStatus("Task Completed...");
         }
         catch (Exception ex)
