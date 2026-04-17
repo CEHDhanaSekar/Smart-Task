@@ -3,7 +3,8 @@
 public enum TaskType
 {
     Email = 1,
-    File = 2
+    File = 2,
+    Calculation = 3
 }
 
 public class ValidationResult

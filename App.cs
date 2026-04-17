@@ -27,6 +27,7 @@ public class App
             Console.WriteLine("Select Task:");
             Console.WriteLine("1. Email Task");
             Console.WriteLine("2. File Task");
+            Console.WriteLine("3. Calculation Task");
             Console.WriteLine("0. Exit");
             Console.Write("Enter choice: ");
 

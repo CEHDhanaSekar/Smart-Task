@@ -21,7 +21,8 @@ public class TaskFactory : ITaskFactory
         _taskMap = new Dictionary<TaskType, Func<BaseTask>>
         {
             { TaskType.Email, CreateEmailTask },
-            { TaskType.File, CreateFileTask }
+            { TaskType.File, CreateFileTask },
+            { TaskType.Calculation, CreateCalculationTask }
         };
     }
 
@@ -63,5 +64,12 @@ public class TaskFactory : ITaskFactory
             filePath,
             _fileValidator
         );
+    }
+
+    private BaseTask CreateCalculationTask()
+    {
+        Console.Write("Enter number: ");
+        long number = long.Parse(Console.ReadLine() ?? "0");
+        return new CalculationTask("Dynamic Calculation Task", number);
     }
 }
