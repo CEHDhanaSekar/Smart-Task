@@ -1,10 +1,10 @@
 using Microsoft.Extensions.Configuration;
 using SmartTask;
-using SmartTask.Shared.Constants;
-using SmartTask.Shared.FileProcessTask.Validators;
-using SmartTask.Shared.Interfaces;
-using SmartTask.Shared.Interfaces.FileProcessTask;
-using SmartTask.Shared.Services;
+using SmartTask.Core.Constants;
+using SmartTask.Tasks.FileProcessing.Validators;
+using SmartTask.Core.Interfaces;
+using SmartTask.Tasks.FileProcessing.Interfaces;
+using SmartTask.Tasks.Email;
 
 var config = new ConfigurationBuilder()
     .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
@@ -31,4 +31,4 @@ pathValidator
 
 App app = new App(emailService, pathValidator);
 
-app.Run();
+await app.RunAsync();

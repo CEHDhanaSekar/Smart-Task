@@ -1,9 +1,12 @@
-using SmartTask.Factories;
-using SmartTask.Shared.Constants;
-using SmartTask.Shared.Interfaces;
-using SmartTask.Shared.Interfaces.FileProcessTask;
-using SmartTask.Tasks;
-using MyTaskFactory = SmartTask.Factories.TaskFactory;
+using SmartTask.Core.Constants;
+using SmartTask.Core.Interfaces;
+using SmartTask.Core.Tasks;
+using SmartTask.Tasks.Calculation;
+using SmartTask.Tasks.Email;
+using SmartTask.Tasks.FileProcessing;
+using SmartTask.Tasks.FileProcessing.Interfaces;
+
+using MyTaskFactory = SmartTask.Core.Tasks.TaskFactory;
 
 namespace SmartTask;
 
@@ -18,7 +21,7 @@ public class App
         _fileValidator = fileValidator;
     }
 
-    public async void Run()
+    public async Task RunAsync()
     {
         int choice;
 
@@ -43,9 +46,7 @@ public class App
             }
 
             ITaskFactory factory = new MyTaskFactory(_emailService, _fileValidator);
-
             BaseTask task = factory.CreateTask((TaskType)choice);
-
             await task.Execute();
 
         } while (choice != 0);
